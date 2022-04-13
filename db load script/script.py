@@ -36,11 +36,7 @@ cursor = con.cursor()
 query_sql = "CREATE EXTENSION IF NOT EXISTS pgcrypto;"
 cursor.execute(query_sql)
 
-query_sql = "DROP SCHEMA IF EXISTS bank CASCADE;" \
-            "CREATE SCHEMA IF NOT EXISTS bank;"
-cursor.execute(query_sql)
-
-query_sql = """ CREATE TABLE bank.users(
+query_sql = """ CREATE TABLE users(
                     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                     name TEXT,
                     balance NUMERIC(13, 2)
@@ -52,22 +48,24 @@ cursor.execute(query_sql)
 with open('users.json') as file:
     data = json.load(file)
     for user in data:
-        query_sql = "INSERT INTO bank.users (id, name, balance) " \
+        query_sql = "INSERT INTO users (id, name, balance) " \
                     "VALUES ('" + user['id'] + "', '" + user['name'] + "', " + str(user['balance']) + ");"
         cursor.execute(query_sql)
 
 # create transactions table
-query_sql = """ CREATE TABLE bank.transactions(
+query_sql = """ CREATE TABLE transactions(
                     transaction_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                     details TEXT,
                     amount NUMERIC(13, 2),
                     sender_id UUID,
                     receiver_id UUID,
-                    FOREIGN KEY (sender_id) REFERENCES bank.users (id),
-                    FOREIGN KEY (receiver_id) REFERENCES bank.users (id)
+                    FOREIGN KEY (sender_id) REFERENCES users (id),
+                    FOREIGN KEY (receiver_id) REFERENCES users (id)
                 );
             """
 cursor.execute(query_sql)
 
 # close the connection
 con.close()
+
+print("Database Loaded!")
