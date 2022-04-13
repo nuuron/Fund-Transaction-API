@@ -58,3 +58,46 @@ References:
 - https://spring.io/projects/spring-boot
 - https://www.codejava.net/frameworks/spring-boot/connect-to-postgresql-database-examples
 - https://www.digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design
+
+* * *
+
+## Steps to Install
+
+### Load Script
+
+- Install `psycopg2` using:
+    ```
+    pip install psycopg2
+    ```
+- Run the python script to load the users.json to PostgreSQL database server
+    ```
+    python script.py <your username> <your password> <hostname> <portname>
+    ```
+  Here `hostname` and `portname` are **optional** and can be omitted:
+    ```
+    python script.py <your username> <your password>
+    ```
+
+### Application Properties
+
+- Navigate to `application.properties` in the `resources` folder
+- Change the default username and password to your own PostgreSQL server's username and password:
+    ```
+    spring.datasource.username=yourusername
+    spring.datasource.password=yourpassword
+    ```
+- If your host and port are different from defaults, change the JDBC url.\
+
+From:
+```
+  spring.datasource.url=jdbc:postgresql://localhost:5432/neowise
+```
+
+To:
+
+```
+  spring.datasource.url=jdbc:postgresql://<your host>:<your port>/neowise
+```
+***
+
+### ___All set! Now run the Spring Boot Application!___
