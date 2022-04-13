@@ -20,14 +20,14 @@ public class TransactionService {
     private UserService userService;
 
     public Transaction getTransactionById(UUID transactionId) {
-        return transactionRepository.getById(transactionId);
+        return transactionRepository.findById(transactionId).orElse(null);
     }
 
     public List<Transaction> getAllTransaction() {
         return transactionRepository.findAll();
     }
 
-    public Transaction createNewTransaction(UUID senderId, UUID receiverId, Double amount, String details) {
+    public Transaction processNewTransaction(UUID senderId, UUID receiverId, Double amount, String details) {
         if (userService.userExistsById(senderId) && userService.userExistsById(receiverId)) {
             User sender = userService.getUserById(senderId);
             Double senderBalanceAfterTransaction = sender.getBalance() - amount;
@@ -58,7 +58,7 @@ public class TransactionService {
 
     public Boolean reverseOldTransaction (UUID transactionId) {
         if (transactionRepository.existsById(transactionId)) {
-            Transaction oldTransaction = transactionRepository.getById(transactionId);
+            Transaction oldTransaction = getTransactionById(transactionId);
 
             Double amount = oldTransaction.getAmount();
 
