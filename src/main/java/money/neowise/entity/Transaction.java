@@ -27,6 +27,13 @@ public class Transaction {
     public Transaction() {
     }
 
+    public Transaction(UUID senderId, UUID receiverId, Double amount, String details) {
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.amount = amount;
+        this.details = details;
+    }
+
     public UUID getTransactionId() {
         return transactionId;
     }
