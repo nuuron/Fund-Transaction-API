@@ -3,6 +3,7 @@ package money.neowise.entity;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
@@ -13,6 +14,7 @@ public class User {
     @Column(name = "id")
     private UUID id;
 
+    @NotNull(message = "user name cannot be null")
     @Column(name = "name")
     private String name;
 
