@@ -8,6 +8,7 @@ import money.neowise.entity.Transaction;
 import money.neowise.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,32 +24,27 @@ public class TransactionController {
         return ResponseEntity.ok(allTransactions);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Transaction> getTransactionById(@PathVariable String id) {
-        UUID transactionId = UUID.fromString(id);
+    @GetMapping("/{transactionId}")
+    public ResponseEntity<Transaction> getTransactionById(@PathVariable UUID transactionId) {
         Transaction transaction = transactionService.getTransactionById(transactionId);
         return ResponseEntity.ok(transaction);
     }
 
     @PostMapping("/")
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Map<String, Object> payload) {
-        UUID senderId = UUID.fromString(payload.get("senderId").toString());
-        UUID receiverId = UUID.fromString(payload.get("receiverId").toString());
-        Double amount = Double.parseDouble(payload.get("amount").toString());
-        String details = payload.get("details").toString();
-
-        Transaction transaction = transactionService.processNewTransaction(senderId, receiverId, amount, details);
-
-        return ResponseEntity.ok(transaction);
+    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction newTransaction) {
+        Transaction processedTransaction = transactionService.processNewTransaction(newTransaction);
+        return ResponseEntity.ok(processedTransaction);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteTransaction(@PathVariable String id) {
-        UUID transactionId = UUID.fromString(id);
-
+    @DeleteMapping("/{transactionId}")
+    public ResponseEntity<Boolean> deleteTransaction(@PathVariable UUID transactionId) {
         Boolean deleteSuccessful = transactionService.reverseOldTransaction(transactionId);
-
         return ResponseEntity.ok(deleteSuccessful);
+    }
+
+    @PostMapping("/check")
+    public ResponseEntity<Transaction> check(@RequestBody Transaction transaction) {
+        return ResponseEntity.ok(transaction);
     }
 
 }

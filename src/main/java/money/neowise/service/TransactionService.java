@@ -26,13 +26,14 @@ public class TransactionService {
         return transactionRepository.findAll();
     }
 
-    public Transaction processNewTransaction(UUID senderId, UUID receiverId, Double amount, String details) {
-        if (!userService.userExistsById(senderId) || !userService.userExistsById(receiverId)) {
+    public Transaction processNewTransaction(Transaction newTransaction) {
+        if (!userService.userExistsById(newTransaction.getSenderId())
+            || !userService.userExistsById(newTransaction.getReceiverId())) {
             return null;
         }
 
-        User sender = userService.getUserById(senderId);
-        Double senderBalanceAfterTransaction = sender.getBalance() - amount;
+        User sender = userService.getUserById(newTransaction.getSenderId());
+        Double senderBalanceAfterTransaction = sender.getBalance() - newTransaction.getAmount();
 
         if (senderBalanceAfterTransaction < 0) {
             return null;
@@ -41,19 +42,18 @@ public class TransactionService {
         sender.setBalance(senderBalanceAfterTransaction);
         userService.updateUser(sender);
 
-        User receiver = userService.getUserById(receiverId);
-        Double receiverBalanceAfterTransaction = receiver.getBalance() + amount;
+        User receiver = userService.getUserById(newTransaction.getReceiverId());
+        Double receiverBalanceAfterTransaction = receiver.getBalance() + newTransaction.getAmount();
         receiver.setBalance(receiverBalanceAfterTransaction);
         userService.updateUser(receiver);
 
-        Transaction newTransaction = new Transaction(senderId, receiverId, amount, details);
         newTransaction = transactionRepository.save(newTransaction);
 
         return newTransaction;
 
     }
 
-    public Boolean reverseOldTransaction (UUID transactionId) {
+    public Boolean reverseOldTransaction(UUID transactionId) {
         if (!transactionRepository.existsById(transactionId)) {
             return false;
         }
