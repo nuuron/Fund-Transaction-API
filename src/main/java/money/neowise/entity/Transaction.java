@@ -8,7 +8,6 @@ import java.util.UUID;
 public class Transaction {
 
     @Id
-    @GeneratedValue
     @Column(name = "transaction_id")
     private UUID transactionId;
 

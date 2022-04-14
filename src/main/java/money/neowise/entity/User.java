@@ -10,7 +10,6 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue
     @Column(name = "id")
     private UUID id;
 
