@@ -1,6 +1,11 @@
 package money.neowise.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
@@ -14,12 +19,16 @@ public class Transaction {
     @Column(name = "details")
     private String details;
 
+    @NotNull(message = "transaction amount cannot be null")
+    @DecimalMin(value = "0.00", inclusive = false, message = "transaction amount cannot be zero or negative")
     @Column(name = "amount")
     private Double amount;
 
+    @NotNull(message = "senderId cannot be null")
     @Column(name = "sender_id")
     private UUID senderId;
 
+    @NotNull(message = "receiverId cannot be null")
     @Column(name = "receiver_id")
     private UUID receiverId;
 
