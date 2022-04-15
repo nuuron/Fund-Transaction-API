@@ -38,4 +38,11 @@ public abstract class ApiException extends Exception {
         return message;
     }
 
+    // this is a workaround way to prevent the stackTrace from keep getting included with the error response
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
+    }
+
+
 }
