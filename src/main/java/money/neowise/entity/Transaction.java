@@ -1,9 +1,6 @@
 package money.neowise.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -13,6 +10,7 @@ import java.util.UUID;
 public class Transaction {
 
     @Id
+    @GeneratedValue
     @Column(name = "transaction_id")
     private UUID transactionId;
 
