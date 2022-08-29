@@ -1,4 +1,4 @@
-Your task is to build a simple REST API using Spring Boot Framework and PostgreSQL.
+The task is to build a simple REST API using Spring Boot Framework and PostgreSQL.
 
 ## API TASK
 
@@ -38,26 +38,6 @@ Implement a transaction API for enabling fund transfer between users.
 `DELETE: /api/transactions/<transactionId>`
 
 - Reverses a transaction and restores the senders and receivers balance accordingly.
-
-## Notes
-
-- You will be evaluated on basis of code quality - namely code structure, variable and function names, separation of responsibilities between classes. (Check SOLID principles in references)
-- Design your database schemas with appropriate data types and keep in mind that queries should be easy to write.
-- Feel free to make any assumptions if you feel we have not mentioned something but make sure you inform us about them during the time of submission.
-
-## Submission
-
-- Create a Github repository for this task and name it - `yourfirstname_neowise_se_assignment`.
-- Add [Abhay Nadkarni (anad97)](https://github.com/anad97) as contributor to your github repository so that the assignment can be reviewed.
-- Include this README in your repository and add an additional section describing the steps requried to run the code.
-- Each change should be submitted in the form of well labelled commits.
-- Make sure the PostgreSQL db is in the repository before submitting.
-
-References:
-
-- https://spring.io/projects/spring-boot
-- https://www.codejava.net/frameworks/spring-boot/connect-to-postgresql-database-examples
-- https://www.digitalocean.com/community/conceptual_articles/s-o-l-i-d-the-first-five-principles-of-object-oriented-design
 
 * * *
 
